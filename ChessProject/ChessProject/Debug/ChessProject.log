@@ -1,0 +1,5 @@
+﻿  ChessProject.cpp
+  chess.cpp
+c:\users\svetomir\desktop\chessproject\chessproject\chess.cpp(277): warning C4101: 's': unreferenced local variable
+  Generating Code...
+  ChessProject.vcxproj -> C:\Users\Svetomir\Desktop\ChessProject\Debug\ChessProject.exe
