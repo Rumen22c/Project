@@ -83,6 +83,7 @@ bool Board::doMove() {
 	string move;
 	int x1, x2, y1, y2;
 	bool stop = false;
+	
 	Position startPosition;
 	Position endPosition;
 	while (!stop)
@@ -92,10 +93,12 @@ bool Board::doMove() {
 		cin >> move;
 		x1 = move[0] - 48;
 		y1 = move[1] - 48;
+		
 		startPosition.setCoordinateX(x1);
 		startPosition.setCoordinateY(y1);
 		x2 = move[2] - 48;
 		y2 = move[3] - 48;
+		
 		endPosition.setCoordinateX(x2);
 		endPosition.setCoordinateY(y2);
 		if (getSquare(startPosition)->getColor() == turn)
@@ -184,20 +187,31 @@ bool Board::playGame()
 
 }
 
-bool Board::moveKing(Square* thisKing, Square* thatSpace) {
+bool Board::isPossibleToMoveKing(Square* thisKing, Square* thatSpace) {
 	//off board inputs should be handled elsewhere (before this)
 	//squares with same color should be handled elsewhere (before this)
 	if (abs(thatSpace->getcoordinateX() - thisKing->getcoordinateX()) == 1)
 		if (abs(thatSpace->getcoordinateY() - thisKing->getcoordinateY()) == 1)
 		{
-			thatSpace->setSpace(thisKing);
-			thisKing->setEmpty();
+			
 			return true;
 		}
 		else return false;
 	else return false;
 }
-bool Board::moveQueen(Square* thisQueen, Square* thatSpace) { //there might be problems with numbers of brackets
+void Board::moveKing(Square* thisKing, Square* thatSpace) {
+	
+			thatSpace->setSpace(thisKing);
+			thisKing->setEmpty();
+			
+		
+}
+void Board::moveQueen(Square * thisQueen, Square * thatSpace)
+{
+	thatSpace->setSpace(thisQueen);
+	thisQueen->setEmpty();
+}
+bool Board::isPossibleToMoveQueen(Square* thisQueen, Square* thatSpace) { //there might be problems with numbers of brackets
 													   //off board inputs should be handled elsewhere (before this)
 													   //squares with same color should be handled elsewhere (before this)
 
@@ -258,8 +272,7 @@ bool Board::moveQueen(Square* thisQueen, Square* thatSpace) { //there might be p
 
 	if (invalid == false)
 	{
-		thatSpace->setSpace(thisQueen);
-		thisQueen->setEmpty();
+		
 		return true;
 	}
 	else
@@ -268,7 +281,7 @@ bool Board::moveQueen(Square* thisQueen, Square* thatSpace) { //there might be p
 	}
 }
 
-bool Board::moveBishop(Square* thisBishop, Square* thatSpace) { //there might be problems with number of brackets
+bool Board::isPossibleToMoveBishop(Square* thisBishop, Square* thatSpace) { //there might be problems with number of brackets
 	int bishopX = thisBishop->getcoordinateX();
 	int bishopY = thisBishop->getcoordinateY();
 	int thatX = thatSpace->getcoordinateX();
@@ -293,8 +306,7 @@ bool Board::moveBishop(Square* thisBishop, Square* thatSpace) { //there might be
 
 	if (invalid == false)
 	{
-		thatSpace->setSpace(thisBishop);
-		thisBishop->setEmpty();
+		
 		return true;
 	}
 	else
@@ -302,7 +314,11 @@ bool Board::moveBishop(Square* thisBishop, Square* thatSpace) { //there might be
 		return false;
 	}
 }
-bool Board::moveKnight(Square* thisKnight, Square* thatSpace)
+void Board::moveBishop(Square* thisBishop, Square* thatSpace) {
+	thatSpace->setSpace(thisBishop);
+	thisBishop->setEmpty();
+}
+bool Board::isPossibleToMoveKnight(Square* thisKnight, Square* thatSpace)
 {
 	//off board inputs should be handled elsewhere (before this)
 	//squares with same color should be handled elsewhere (before this)
@@ -313,8 +329,7 @@ bool Board::moveKnight(Square* thisKnight, Square* thatSpace)
 
 	if ((abs(knightX - thatX) == 2 && abs(knightY - thatY) == 1) || (abs(knightX - thatX) == 1 && abs(knightY - thatY) == 2))
 	{
-		thatSpace->setSpace(thisKnight);
-		thisKnight->setEmpty();
+	
 		return true;
 	}
 	else
@@ -322,8 +337,11 @@ bool Board::moveKnight(Square* thisKnight, Square* thatSpace)
 		return false;
 	}
 }
-
-bool Board::moveRook(Square* thisRook, Square* thatSpace)
+void Board::moveKnight(Square* thisKnight, Square* thatSpace) {
+	thatSpace->setSpace(thisKnight);
+	thisKnight->setEmpty();
+}
+bool Board::isPossibleToMoveRook(Square* thisRook, Square* thatSpace)
 {
 	//off board inputs should be handled elsewhere (before this)
 	//squares with same color should be handled elsewhere (before this)
@@ -362,8 +380,7 @@ bool Board::moveRook(Square* thisRook, Square* thatSpace)
 	}
 	if (invalid == false)
 	{
-		thatSpace->setSpace(thisRook);
-		thisRook->setEmpty();
+	
 		return true;
 	}
 	else
@@ -372,8 +389,15 @@ bool Board::moveRook(Square* thisRook, Square* thatSpace)
 		return false;
 	}
 }
-
-bool Board::movePawn(Square* thisPawn, Square* thatSpace) {
+void Board::moveRook(Square* thisRook, Square* thatSpace) {
+	thatSpace->setSpace(thisRook);
+	thisRook->setEmpty();
+}
+void Board::movePawn(Square* thisPawn, Square* thatSpace) {
+	thatSpace->setSpace(thisPawn);
+	thisPawn->setEmpty();
+}
+bool Board::isPossibleToMovePawn(Square* thisPawn, Square* thatSpace) {
 	//off board inputs should be handled elsewhere (before this)
 	//squares with same color should be handled elsewhere (before this)
 	using namespace std;
@@ -390,14 +414,12 @@ bool Board::movePawn(Square* thisPawn, Square* thatSpace) {
 		if (pawnX == thatX && thatY == pawnY + 1 && thatSpace->getColor() == NONE)
 		{
 			thatSpace->setSpace(thisPawn);
-			thisPawn->setEmpty();
 			return true;
 		}
 		else
 			if ((pawnX + 1 == thatX || pawnX - 1 == thatX) && pawnY + 1 == thatY && thatSpace->getColor() == BLACK)
 			{
-				thatSpace->setSpace(thisPawn);
-				thisPawn->setEmpty();
+				
 				return true;
 			}
 			else
@@ -408,15 +430,13 @@ bool Board::movePawn(Square* thisPawn, Square* thatSpace) {
 		{
 			if (pawnX == thatX && thatY == pawnY - 1 && thatSpace->getColor() == NONE)
 			{
-				thatSpace->setSpace(thisPawn);
-				thisPawn->setEmpty();
+				
 				return true;
 			}
 			else
 				if ((pawnX + 1 == thatX || pawnX - 1 == thatX) && pawnY - 1 == thatY && thatSpace->getColor() == WHITE)
 				{
-					thatSpace->setSpace(thisPawn);
-					thisPawn->setEmpty();
+					
 					return true;
 				}
 				else
@@ -444,17 +464,32 @@ bool Board::makeMove(Position  startPosition, Position endPosition) {
 
 	switch (src->getFigure())
 	{
-	case KING: return moveKing(src, dest);
+	case KING: 
+		if (isPossibleToMoveKing(src, dest))moveKing(src, dest);
+		return isPossibleToMoveKing(src, dest);
 		break;
-	case QUEEN: return moveQueen(src, dest);
+	case QUEEN:
+		if (isPossibleToMoveQueen(src, dest))moveQueen(src, dest);
+		return isPossibleToMoveQueen(src, dest);
 		break;
-	case BISHOP: return moveBishop(src, dest);
+	case BISHOP: 
+		if( isPossibleToMoveBishop(src,dest))moveBishop(src, dest);
+		return isPossibleToMoveBishop(src, dest);
 		break;
-	case KNIGHT: return moveKnight(src, dest);
+	case KNIGHT: 
+		if(isPossibleToMoveKnight(src, dest))
+		moveKnight(src, dest);
+		return isPossibleToMoveKnight(src, dest);
 		break;
-	case ROOK: return moveRook(src, dest);
+	case ROOK:
+		if(isPossibleToMoveRook(src,dest))
+		moveRook(src, dest);
+		return isPossibleToMoveRook(src, dest);
 		break;
-	case PAWN: return movePawn(src, dest);
+	case PAWN:
+		if(isPossibleToMovePawn(src, dest))
+		movePawn(src, dest);
+		return isPossibleToMovePawn(src, dest);
 		break;
 	case EMPTY: std::cout << "You do not have a piece there" << std::endl;  return false;
 		break;

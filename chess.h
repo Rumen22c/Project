@@ -7,8 +7,9 @@ enum   Figure { KING, QUEEN, BISHOP, KNIGHT, ROOK, PAWN, EMPTY };
 enum   Color { WHITE, BLACK, NONE };
 
 class Position {
-public:
 	int coordinateX, coordinateY;
+public:
+	
 	Position() {
 		coordinateX = 0;
 		coordinateY = 0;
@@ -35,7 +36,7 @@ class   Square
 
 	Figure   figure;
 	Color   color;
-	//int   coordinateX, coordinateY;
+	
 	Position positionOnTheTable;
 public:
 	void   setSpace(Square *);
@@ -54,14 +55,21 @@ class   Board
 {
 	Square   square[8][8];
 	Color   turn = WHITE;
-	//bool   isPossibleToMoveKing(Square *   thisKing, Square *   thatSpace);
+	
 
-	bool   moveKing(Square* thisKing, Square* thatSpace);
-	bool   moveQueen(Square *   thisQueen, Square *   thatSpace);
-	bool   moveBishop(Square *   thisBishop, Square *   thatSpace);
-	bool   moveKnight(Square *   thisKnight, Square *   thatSpace);
-	bool   moveRook(Square *   thisRook, Square *   thatSpace);
-	bool   movePawn(Square *   thisPawn, Square *   thatSpace);
+	bool   isPossibleToMoveKing(Square* thisKing, Square* thatSpace);
+	bool   isPossibleToMoveQueen(Square *   thisQueen, Square *   thatSpace);
+	bool   isPossibleToMoveBishop(Square *   thisBishop, Square *   thatSpace);
+	bool   isPossibleToMoveKnight(Square *   thisKnight, Square *   thatSpace);
+	bool   isPossibleToMoveRook(Square *   thisRook, Square *   thatSpace);
+	bool   isPossibleToMovePawn(Square *   thisPawn, Square *   thatSpace);
+
+	void   moveKing(Square* thisKing, Square* thatSpace);
+	void   moveQueen(Square *   thisQueen, Square *   thatSpace);
+	void   moveBishop(Square *   thisBishop, Square *   thatSpace);
+	void   moveKnight(Square *   thisKnight, Square *   thatSpace);
+    void   moveRook(Square *   thisRook, Square *   thatSpace);
+	void   movePawn(Square *   thisPawn, Square *   thatSpace);
 	bool   makeMove(Position  startPosition, Position endPosition);
 	void   printBoard();
 public:
