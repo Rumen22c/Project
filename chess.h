@@ -8,6 +8,7 @@ enum   Color { WHITE, BLACK, NONE };
 
 class Position {
 	int coordinateX, coordinateY;
+	
 public:
 	
 	Position() {
@@ -18,18 +19,28 @@ public:
 		coordinateX = x;
 		coordinateY = y;
 	}
-	int getCoordinateX() {
-		return coordinateX;
-	}
-	int getCoordinateY() {
-		return coordinateY;
-	}
 	void setCoordinateX(int x) {
 		coordinateX = x;
 	}
 	void setCoordinateY(int y) {
 		coordinateY = y;
 	}
+	int getCoordinateX() {
+		return coordinateX;
+	}
+	int getCoordinateY() {
+		return coordinateY;
+	}
+	Position(const Position& other) {
+		this->coordinateX = other.coordinateX;
+		this->coordinateY = other.coordinateY;
+	 }
+   Position& operator=(const Position& other) {
+	   
+	   this->coordinateX = other.coordinateX;
+	   this->coordinateY = other.coordinateY;
+	   return *this;
+   }
 };
 class   Square
 {
@@ -44,8 +55,9 @@ public:
 	void   setFigureAndColor(Figure, Color);
 	Figure   getFigure();
 	Color   getColor();
-	void   setcoordinateX(int   x) {positionOnTheTable.setCoordinateX(x); }
-	void   setcoordinateY(int   y) { positionOnTheTable.setCoordinateY(y); }
+	//void   setcoordinateX(int   x) {positionOnTheTable.setCoordinateX(x); }
+	//void   setcoordinateY(int   y) { positionOnTheTable.setCoordinateY(y); }
+	void setCoordinates(int x, int y);
 	int   getcoordinateX() { return  positionOnTheTable.getCoordinateX(); }
 	int   getcoordinateY() { return   positionOnTheTable.getCoordinateX(); }
 	Square();

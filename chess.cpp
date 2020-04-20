@@ -31,6 +31,11 @@ Color Square::getColor()
 	return color;
 }
 
+void Square::setCoordinates(int x, int y)
+{
+	positionOnTheTable = Position(x, y);
+}
+
 void Square::setFigureAndColor(Figure p, Color c)
 {
 	figure = p;
@@ -38,20 +43,20 @@ void Square::setFigureAndColor(Figure p, Color c)
 
 }
 
-void printFigures(Figure p, Color c) {
-	switch (p)
+void printFigures(Figure position, Color color) {
+	switch (position)
 	{
-	case KING: (c == WHITE) ? cout << " K " : cout << " k ";
+	case KING: (color == WHITE) ? cout << " K " : cout << " k ";
 		break;
-	case QUEEN: (c == WHITE) ? cout << " Q " : cout << " q ";
+	case QUEEN: (color == WHITE) ? cout << " Q " : cout << " q ";
 		break;
-	case BISHOP:(c == WHITE) ? cout << " B " : cout << " b ";
+	case BISHOP:(color == WHITE) ? cout << " B " : cout << " b ";
 		break;
-	case KNIGHT:(c == WHITE) ? cout << " H " : cout << " h ";
+	case KNIGHT:(color == WHITE) ? cout << " H " : cout << " h ";
 		break;
-	case ROOK: (c == WHITE) ? cout << " R " : cout << " r ";
+	case ROOK: (color == WHITE) ? cout << " R " : cout << " r ";
 		break;
-	case PAWN: (c == WHITE) ? cout << " P " : cout << " p ";
+	case PAWN: (color == WHITE) ? cout << " P " : cout << " p ";
 		break;
 	case EMPTY: cout << " " << "\21" << " ";
 		break;
@@ -80,8 +85,8 @@ void Board::printBoard() {
 
 bool Board::doMove() {
 	
-	string move;
-	int x1, x2, y1, y2;
+	
+	
 	bool stop = false;
 	
 	Position startPosition;
@@ -90,7 +95,9 @@ bool Board::doMove() {
 	{
 		(turn == WHITE) ? cout << "White's turn" << endl : cout << "Black's turn" << endl;
 		cout << "Type in your move as a single four character string. Use x-coordinates first in each pair." << endl;
+		string move;
 		cin >> move;
+		int x1, x2, y1, y2;
 		x1 = move[0] - 48;
 		y1 = move[1] - 48;
 		
@@ -173,8 +180,8 @@ void Board::setBoard()
 	for (int i = 0; i < 8; i++)
 		for (int j = 0; j < 8; j++)
 		{
-			square[i][j].setcoordinateX(i);
-			square[i][j].setcoordinateY(j);
+			
+			square[i][j].setCoordinates(i,j);
 		}
 
 }
@@ -220,13 +227,13 @@ bool Board::isPossibleToMoveQueen(Square* thisQueen, Square* thatSpace) { //ther
 	int thatX = thatSpace->getcoordinateX();
 	int thatY = thatSpace->getcoordinateY();
 	std::cout << "this";
-	int yIncrement;
-	int xIncrement;
+	
 
-	bool invalid = false;
+	
 	if (queenX != thatX || queenY != thatY)
 	{
-
+		int yIncrement;
+		int xIncrement;
 		if (queenX == thatX)
 		{
 			yIncrement = (thatY - queenY) / (abs(thatY - queenY));
@@ -265,20 +272,11 @@ bool Board::isPossibleToMoveQueen(Square* thisQueen, Square* thatSpace) { //ther
 				}
 				else
 					return false;
-		//if()
-	}
-
-
-
-	if (invalid == false)
-	{
 		
-		return true;
 	}
-	else
-	{
-		return false;
-	}
+
+
+	
 }
 
 bool Board::isPossibleToMoveBishop(Square* thisBishop, Square* thatSpace) { //there might be problems with number of brackets
@@ -286,7 +284,7 @@ bool Board::isPossibleToMoveBishop(Square* thisBishop, Square* thatSpace) { //th
 	int bishopY = thisBishop->getcoordinateY();
 	int thatX = thatSpace->getcoordinateX();
 	int thatY = thatSpace->getcoordinateY();
-	bool invalid = false;
+	
 	Square *s;
 	if (abs(bishopX - thatX) == abs(bishopY - thatY))
 	{
@@ -304,15 +302,7 @@ bool Board::isPossibleToMoveBishop(Square* thisBishop, Square* thatSpace) { //th
 	else
 		return false;
 
-	if (invalid == false)
-	{
-		
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	
 }
 void Board::moveBishop(Square* thisBishop, Square* thatSpace) {
 	thatSpace->setSpace(thisBishop);
